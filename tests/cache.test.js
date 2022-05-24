@@ -3,6 +3,12 @@ const db = require('./db')
 const Cache = require('../models/cache.model')
 const cacheService = require('../services/cache.service')
 
+jest.mock('../config', () => ({
+  maximumCacheSize: 2,
+}))
+
+const config = require('../config')
+
 // Connect to new in-memory database before running a test
 beforeAll(async () => await db.connect())
 
@@ -59,7 +65,6 @@ describe('Cache', () => {
     })
 
     test('should override oldest cache when cache size is reached', async () => {
-      process.env.MAX_CACHE_SIZE = 2
       const date = new Date()
       const goneKey = 'testgone'
       const data = [
@@ -86,7 +91,7 @@ describe('Cache', () => {
 
       const { hit, value } = await cacheService.handleGetCacheByKey(test.key, () => {
         return test.value
-      })
+      }, 'ME')
 
       const newRecord = await Cache.findOne({ key: test.key })
       const oldRecord = await Cache.findOne({ key: goneKey })
