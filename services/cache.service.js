@@ -1,4 +1,5 @@
 const Cache = require('../models/cache.model')
+const logger = require('./logger.service')
 const config = require('../config')
 
 const expiredTtl = (cache) => {
@@ -12,7 +13,7 @@ module.exports = {
     if (expiredTtl(existingCache)) {
       await Cache.deleteOne({ key })
     } else if (existingCache) {
-      console.log('Cache hit')
+      logger.info('Cache hit')
       existingCache.ttl = Date.now() + config.defaultTtl
       await existingCache.save()
 
@@ -22,7 +23,7 @@ module.exports = {
       }
     }
 
-    console.log('Cache miss')
+    logger.info('Cache miss')
 
     const currentCacheSize = await Cache.countDocuments()
     const value = randomGenerator()
