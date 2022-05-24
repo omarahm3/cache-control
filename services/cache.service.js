@@ -41,6 +41,7 @@ module.exports = {
     return result.deletedCount > 0
   },
   removeAllKeys: async () => {
-
+    const result = await Cache.deleteMany({})
+    return result.deletedCount > 0
   }
 }
