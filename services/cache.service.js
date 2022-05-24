@@ -1,12 +1,20 @@
 const Cache = require('../models/cache.model')
 const config = require('../config')
 
+const expiredTtl = (cache) => {
+  return cache && Date.now() - cache.ttl > config.defaultTtl
+}
+
 module.exports = {
   handleGetCacheByKey: async (key, randomGenerator) => {
     const existingCache = await Cache.findOne({ key })
 
-    if (existingCache) {
+    if (expiredTtl(existingCache)) {
+      await Cache.deleteOne({ key })
+    } else if (existingCache) {
       console.log('Cache hit')
+      existingCache.ttl = Date.now() + config.defaultTtl
+      await existingCache.save()
 
       return {
         hit: true,
@@ -24,12 +32,12 @@ module.exports = {
       const oldestCache = await Cache.findOne().sort({ updatedAt: -1 })
       oldestCache.key = key
       oldestCache.value = value
+      oldestCache.ttl = Date.now() + config.defaultTtl
       await oldestCache.save()
     } else {
       const cache = new Cache({ key, value })
       await cache.save()
     }
-
 
     return {
       hit: false,
