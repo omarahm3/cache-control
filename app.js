@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use('/api/cache', cacheRouter)
 
 db.once('open', () => {
-    console.log('Connected to database')
-    app.listen(config.port, () => {
-        console.log('Server is up and running on port numner ' + config.port)
-    })
+  console.log('Connected to database')
+  app.listen(config.port, () => {
+    console.log('Server is up and running on port numner ' + config.port)
+  })
 })
