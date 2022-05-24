@@ -24,3 +24,20 @@ exports.createOrUpdateCache = async (req, res) => {
   const newValue = await cacheService.createOrUpdateCache(key, value)
   return res.send(newValue)
 }
+
+exports.removeCacheByKey = async (req, res) => {
+  const { key } = req.params
+  const result = await cacheService.removeKey(key)
+
+  if (!result) {
+    return res.status(404).json({
+      success: false,
+      message: `key [${key}] does not exist`,
+    })
+  }
+  
+  return res.json({
+    success: true,
+    message: `key [${key}] was removed`
+  })
+}

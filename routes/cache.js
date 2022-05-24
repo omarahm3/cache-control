@@ -9,4 +9,6 @@ router.get('/', CacheController.getAllStoredKeys)
 
 router.post('/', CacheController.createOrUpdateCache)
 
+router.delete('/:key', CacheController.removeCacheByKey)
+
 module.exports = router
