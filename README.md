@@ -6,11 +6,19 @@ This is a simple REST API to act like a small management system. It handle also 
 
 ## Prerequisites
 
-You need to have mongodb running on your machine to be able to run the server. Tests are using in-memory database though.
+- You need to have mongodb running on your machine to be able to run the server. Tests are using in-memory database though.
 
 ```
 # You can run a local instance directly using docker
 docker run -d -p 27017:27017 --name local-mongo mongo:latest
+```
+
+- To be able to properly run the tests, its recommended to use node version `"^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0"` or jest will throw this error:
+
+[Check the workflow](https://github.com/omarahm3/cache-control/runs/6582756628?check_suite_focus=true)
+
+```
+error jest@28.1.0: The engine "node" is incompatible with this module. Expected version "^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0". Got "15.14.0"
 ```
 
 ## Setup
