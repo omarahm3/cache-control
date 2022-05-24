@@ -3,7 +3,7 @@ const db = require('./db')
 const Cache = require('../models/cache.model')
 const cacheService = require('../services/cache.service')
 
-const DEFAULT_TTL = 5
+const DEFAULT_TTL = 500
 
 jest.mock('../config', () => ({
   maximumCacheSize: 2,
