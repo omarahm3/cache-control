@@ -72,7 +72,10 @@ module.exports = {
   },
   getAllStoredKeys: async () => {
     const data = await Cache.find()
-    return data.map((d) => d.key)
+    return data.map((d) => ({
+      key: d.key,
+      value: d.value,
+    }))
   },
   createOrUpdateCache: async (key, value) => {
     await Cache.updateOne({ key }, { $set: { value } }, { upsert: true })

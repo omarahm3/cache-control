@@ -133,15 +133,13 @@ describe('Cache', () => {
 
   describe('return all stored keys', () => {
     test('should return all keys', async () => {
-      const key1 = 'test1'
-      const key2 = 'test2'
       const fixtures = [
         {
-          key: key1,
+          key: 'test1',
           value: 'value1',
         },
         {
-          key: key2,
+          key: 'test2',
           value: 'value2',
         },
       ]
@@ -150,8 +148,7 @@ describe('Cache', () => {
       const data = await cacheService.getAllStoredKeys()
 
       expect(data.length).toBe(2)
-      expect(data).toContain(key1)
-      expect(data).toContain(key2)
+      expect(data).toEqual(fixtures)
     })
 
     test('should return empty list', async () => {
