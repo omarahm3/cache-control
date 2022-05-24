@@ -3,8 +3,7 @@ const db = require('./db')
 const Cache = require('../models/cache.model')
 const cacheService = require('../services/cache.service')
 
-// 65 seconds since mongo's background task that removes expired documents runs every 60 seconds
-const DEFAULT_TTL = 65
+const DEFAULT_TTL = 5
 
 jest.mock('../config', () => ({
   maximumCacheSize: 2,
