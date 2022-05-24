@@ -57,6 +57,46 @@ describe('Cache', () => {
       expect(record.key).toBe(test.key)
       expect(record.value).toBe(test.value)
     })
+
+    test('should override oldest cache when cache size is reached', async () => {
+      process.env.MAX_CACHE_SIZE = 2
+      const date = new Date()
+      const goneKey = 'testgone'
+      const data = [
+        {
+          key: goneKey,
+          value: 'ishouldbegone',
+          createdAt: date.setHours(date.getHours() - 2),
+          updatedAt: date.setHours(date.getHours() - 2),
+        },
+        {
+          key: 'test',
+          value: 'ishouldstay',
+          createdAt: date.setHours(date.getHours() - 1),
+          updatedAt: date.setHours(date.getHours() - 1),
+        }
+      ]
+
+      await Cache.insertMany(data)
+
+      const test = {
+        key: 'newkey',
+        value: 'newvalue'
+      }
+
+      const { hit, value } = await cacheService.handleGetCacheByKey(test.key, () => {
+        return test.value
+      })
+
+      const newRecord = await Cache.findOne({ key: test.key })
+      const oldRecord = await Cache.findOne({ key: goneKey })
+
+      expect(hit).toBe(false)
+      expect(value).toBe(test.value)
+      expect(newRecord.key).toBe(test.key)
+      expect(newRecord.value).toBe(test.value)
+      expect(oldRecord).toBe(null)
+    })
   })
 
   describe('return all stored keys', () => {
