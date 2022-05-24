@@ -1,4 +1,4 @@
-const { uuid } = require('uuidv4')
+const { uuidv4 } = require('uuidv4')
 const Cache = require('../models/cache.model')
 const cacheService = require('../services/cache.service')
 
@@ -6,7 +6,7 @@ exports.getCacheByKey = async (req, res) => {
   const { key } = req.params
 
   try {
-    const { hit, value } = await cacheService.handleGetCacheByKey(key, uuid)
+    const { hit, value } = await cacheService.handleGetCacheByKey(key, uuidv4)
     return res.send(value)
   } catch (error) {
     console.log(error)
