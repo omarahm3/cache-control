@@ -91,7 +91,7 @@ describe('Cache', () => {
 
       const { hit, value } = await cacheService.handleGetCacheByKey(test.key, () => {
         return test.value
-      }, 'ME')
+      })
 
       const newRecord = await Cache.findOne({ key: test.key })
       const oldRecord = await Cache.findOne({ key: goneKey })
