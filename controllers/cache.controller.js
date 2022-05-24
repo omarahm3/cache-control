@@ -7,7 +7,7 @@ exports.getCacheByKey = async (req, res) => {
 
   try {
     const { hit, value } = await cacheService.handleGetCacheByKey(key, v4)
-    return res.send(value)
+    return res.json(value)
   } catch (error) {
     console.log(error)
     return res.sendStatus(500)
@@ -16,13 +16,13 @@ exports.getCacheByKey = async (req, res) => {
 
 exports.getAllStoredKeys = async (req, res) => {
   const keys = await cacheService.getAllStoredKeys()
-  return res.send(keys)
+  return res.json(keys)
 }
 
 exports.createOrUpdateCache = async (req, res) => {
   const { key, value } = req.body
   const newValue = await cacheService.createOrUpdateCache(key, value)
-  return res.send(newValue)
+  return res.json(newValue)
 }
 
 exports.removeCacheByKey = async (req, res) => {
