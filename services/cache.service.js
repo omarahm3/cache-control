@@ -39,5 +39,8 @@ module.exports = {
 
     // Return true if at least 1 record was removed
     return result.deletedCount > 0
+  },
+  removeAllKeys: async () => {
+
   }
 }

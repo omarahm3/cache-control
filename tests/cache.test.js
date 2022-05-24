@@ -146,4 +146,29 @@ describe('Cache', () => {
     })
   })
 
+  describe('remove all keys from cache', () => {
+    test('should remove all keys from cache', async () => {
+      const data = [
+        {
+          key: 'test1',
+          value: 'ishouldberemoved'
+        },
+        {
+          key: 'test2',
+          value: 'ishouldberemoved'
+        },
+        {
+          key: 'test3',
+          value: 'ishouldberemoved'
+        },
+      ]
+
+      await Cache.insertMany(data)
+
+      const result = await cacheService.removeAllKeys()
+
+      expect(result).toBe(true)
+    })
+  })
+
 })
