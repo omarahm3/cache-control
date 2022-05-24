@@ -1,0 +1,23 @@
+{
+  "name": "cache",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "jest --runInBand ./tests",
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.4",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "@shelf/jest-mongodb": "^2.2.2",
+    "jest": "^28.1.0",
+    "mongodb-memory-server": "^8.6.0",
+    "nodemon": "^2.0.16",
+    "supertest": "^6.2.3"
+  }
+}
