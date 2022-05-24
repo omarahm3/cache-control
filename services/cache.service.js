@@ -35,7 +35,7 @@ module.exports = {
   },
   removeKey: async (key) => {
     // Call remove directly without checking first to avoid 2 db calls
-    const result = await Cache.remove({ key })
+    const result = await Cache.deleteOne({ key })
 
     // Return true if at least 1 record was removed
     return result.deletedCount > 0
