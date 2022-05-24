@@ -18,3 +18,9 @@ exports.getAllStoredKeys = async (req, res) => {
   const keys = await cacheService.getAllStoredKeys()
   return res.send(keys)
 }
+
+exports.createOrUpdateCache = async (req, res) => {
+  const { key, value } = req.body
+  const newValue = await cacheService.createOrUpdateCache(key, value)
+  return res.send(newValue)
+}

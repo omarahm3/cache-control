@@ -7,4 +7,6 @@ router.get('/:key', CacheController.getCacheByKey)
 
 router.get('/', CacheController.getAllStoredKeys)
 
+router.post('/', CacheController.createOrUpdateCache)
+
 module.exports = router
