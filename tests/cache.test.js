@@ -169,6 +169,11 @@ describe('Cache', () => {
 
       expect(result).toBe(true)
     })
+
+    test('should return false if there are no keys', async () => {
+      const result = await cacheService.removeAllKeys()
+      expect(result).toBe(false)
+    })
   })
 
 })
