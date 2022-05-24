@@ -22,7 +22,7 @@ exports.getAllStoredKeys = async (req, res) => {
 exports.createOrUpdateCache = async (req, res) => {
   const { key, value } = req.body
   const newValue = await cacheService.createOrUpdateCache(key, value)
-  return res.json(newValue)
+  return res.status(201).json(newValue)
 }
 
 exports.removeCacheByKey = async (req, res) => {
