@@ -3,8 +3,12 @@ const db = require('./db')
 const Cache = require('../models/cache.model')
 const cacheService = require('../services/cache.service')
 
+// 65 seconds since mongo's background task that removes expired documents runs every 60 seconds
+const DEFAULT_TTL = 65
+
 jest.mock('../config', () => ({
   maximumCacheSize: 2,
+  defaultTtl: DEFAULT_TTL,
 }))
 
 const config = require('../config')
@@ -101,6 +105,26 @@ describe('Cache', () => {
       expect(newRecord.key).toBe(test.key)
       expect(newRecord.value).toBe(test.value)
       expect(oldRecord).toBe(null)
+    })
+
+    test('should generate new cache if ttl is expired', async () => {
+      const date = new Date()
+      const newValue = 'newvalue'
+      const data = {
+        key: 'test',
+        value: 'value',
+        createdAt: date,
+        updatedAt: date,
+      }
+
+      await Cache.insertMany([data])
+
+      const { hit, value } = await cacheService.handleGetCacheByKey(data.key, () => {
+        return newValue
+      })
+
+      expect(hit).toBe(false)
+      expect(value).toBe(newValue)
     })
   })
 
