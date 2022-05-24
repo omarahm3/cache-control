@@ -103,7 +103,25 @@ describe('Cache', () => {
       const updatedValue = await cacheService.createOrUpdateCache(cacheRecord.key, newValue)
       const dbRecord = await Cache.findOne({ key: cacheRecord.key })
 
+      expect(updatedValue).toBe(newValue)
       expect(dbRecord.value).toBe(newValue)
+    })
+
+    test('should create new record', async () => {
+      const cacheRecord = {
+        key: 'test',
+        value: 'idontexist',
+      }
+      
+      const record = await Cache.findOne({ key: cacheRecord.key })
+
+      expect(record).toBeNull()
+
+      const value = await cacheService.createOrUpdateCache(cacheRecord.key, cacheRecord.value)
+      const dbRecord = await Cache.findOne({ key: cacheRecord.key })
+
+      expect(dbRecord.value).toBe(cacheRecord.value)
+      expect(value).toBe(cacheRecord.value)
     })
   })
 
