@@ -139,8 +139,10 @@ describe('Cache', () => {
       expect(result).toBe(true)
     })
 
-    test('should return key not found if it does not exist', async () => {
+    test('should return false if it does not exist', async () => {
+      const result = await cacheService.removeKey('whereami')
 
+      expect(result).toBe(false)
     })
   })
 
