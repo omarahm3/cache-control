@@ -59,7 +59,6 @@ describe('Cache', () => {
     })
   })
 
-
   describe('return all stored keys', () => {
     test('should return all keys', async () => {
       const key1 = 'test1'
@@ -87,6 +86,24 @@ describe('Cache', () => {
       const data = await cacheService.getAllStoredKeys()
 
       expect(data.length).toBe(0)
+    })
+  })
+
+  describe('create or update cache record', () => {
+    test('should update existing cache record', async () => {
+      const cacheRecord = {
+        key: 'test',
+        value: 'ineedtobeupdated',
+      }
+      const newValue = 'updatedvalue'
+
+      const cache = new Cache(cacheRecord)
+      await cache.save()
+
+      const updatedValue = await cacheService.createOrUpdateCache(cacheRecord.key, newValue)
+      const dbRecord = await Cache.findOne({ key: cacheRecord.key })
+
+      expect(dbRecord.value).toBe(newValue)
     })
   })
 

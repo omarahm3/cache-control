@@ -27,5 +27,8 @@ module.exports = {
   getAllStoredKeys: async () => {
     const data = await Cache.find()
     return data.map((d) => d.key)
+  },
+  createOrUpdateCache: async (key, value) => {
+
   }
 }
