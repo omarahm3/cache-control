@@ -1,6 +1,17 @@
 # Cache control API
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/omarahm3/cache-control)
+
 This is a simple REST API to act like a small management system. It handle also TTLs for cache records and king of data rotation so that it overrides the oldest cache records when the maximum cache size is exceeded.
+
+## Prerequisites
+
+You need to have mongodb running on your machine to be able to run the server. Tests are using in-memory database though.
+
+```
+# You can run a local instance directly using docker
+docker run -d -p 27017:27017 --name local-mongo mongo:latest
+```
 
 ## Setup
 
