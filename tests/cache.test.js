@@ -44,7 +44,7 @@ describe('Cache', () => {
     test('should return an existing string', async () => {
       const test = {
         key: 'test',
-        value: 'randomstring',
+        value: 'randomstring11111',
       }
 
       // Call first fetch the cache data to create it
@@ -107,14 +107,14 @@ describe('Cache', () => {
     })
 
     test('should generate new cache if ttl is expired', async () => {
-      const date = new Date()
+      const date = Date.now()
       const newValue = 'newvalue'
       const data = {
         key: 'test',
         value: 'value',
         createdAt: date,
         updatedAt: date,
-        ttl: new Date()
+        ttl: Date.now()
       }
 
       await Cache.insertMany([data])
