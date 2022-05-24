@@ -125,4 +125,14 @@ describe('Cache', () => {
     })
   })
 
+  describe('remove a given key from cache', () => {
+    test('should remove existing key from cache', async () => {
+      
+    })
+
+    test('should return key not found if it does not exist', async () => {
+
+    })
+  })
+
 })
