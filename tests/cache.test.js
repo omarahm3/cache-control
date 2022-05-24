@@ -56,7 +56,7 @@ describe('Cache', () => {
       expect(initialHit.value).toBe(test.value)
 
       const secondHit = await cacheService.handleGetCacheByKey(test.key, () => {
-        return test.anotherValue
+        return 'shouldnotreturn'
       })
 
       const record = await Cache.findOne({ key: 'test' })
@@ -114,9 +114,13 @@ describe('Cache', () => {
         value: 'value',
         createdAt: date,
         updatedAt: date,
+        ttl: new Date()
       }
 
       await Cache.insertMany([data])
+
+      // Sleep for a couple of seconds to make sure the cache is expired
+      await new Promise((r) => setTimeout(r, DEFAULT_TTL + 1000));
 
       const { hit, value } = await cacheService.handleGetCacheByKey(data.key, () => {
         return newValue
