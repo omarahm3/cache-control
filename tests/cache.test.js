@@ -112,7 +112,7 @@ describe('Cache', () => {
         key: 'test',
         value: 'idontexist',
       }
-      
+
       const record = await Cache.findOne({ key: cacheRecord.key })
 
       expect(record).toBeNull()
@@ -127,7 +127,16 @@ describe('Cache', () => {
 
   describe('remove a given key from cache', () => {
     test('should remove existing key from cache', async () => {
-      
+      const data = {
+        key: 'test',
+        value: 'ishouldberemoved'
+      }
+
+      await Cache.insertMany([data])
+
+      const result = await cacheService.removeKey(data.key)
+
+      expect(result).toBe(true)
     })
 
     test('should return key not found if it does not exist', async () => {

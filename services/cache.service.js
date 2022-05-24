@@ -32,5 +32,8 @@ module.exports = {
     await Cache.updateOne({ key }, { $set: { value } }, { upsert: true })
     const record = await Cache.findOne({ key })
     return record.value
+  },
+  removeKey: async (key) => {
+    
   }
 }
