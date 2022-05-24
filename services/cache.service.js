@@ -1,4 +1,5 @@
 const Cache = require('../models/cache.model')
+const config = require('../config')
 
 module.exports = {
   handleGetCacheByKey: async (key, randomGenerator) => {
@@ -15,9 +16,20 @@ module.exports = {
 
     console.log('Cache miss')
 
+    const currentCacheSize = await Cache.countDocuments()
     const value = randomGenerator()
-    const cache = new Cache({ key, value })
-    await cache.save()
+
+    if (currentCacheSize >= config.maximumCacheSize) {
+      // override oldest cache
+      const oldestCache = await Cache.findOne().sort({ updatedAt: -1 })
+      oldestCache.key = key
+      oldestCache.value = value
+      await oldestCache.save()
+    } else {
+      const cache = new Cache({ key, value })
+      await cache.save()
+    }
+
 
     return {
       hit: false,
