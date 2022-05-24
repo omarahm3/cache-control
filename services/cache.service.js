@@ -29,6 +29,8 @@ module.exports = {
     return data.map((d) => d.key)
   },
   createOrUpdateCache: async (key, value) => {
-
+    await Cache.updateOne({ key }, { $set: { value } }, { upsert: true })
+    const record = await Cache.findOne({ key })
+    return record.value
   }
 }
